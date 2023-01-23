@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body" >
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+<main>
+    <form method="post" class="upsert-form alternate-action" th:object="${author}">
+        <input type="hidden" th:field="*{id}"/>
+        <table th:attr="data-action=${type}">
+            <tbody>
+            <tr>
+                <td><label>Title*</label></td>
+                <td>
+                    <input type="text" th:field="*{title}">
+                    <div class="field-validation-error" th:errors="*{title}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>First Name*</label></td>
+                <td>
+                    <input type="text" th:field="*{firstName}">
+                    <div class="field-validation-error" th:errors="*{firstName}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Last Name</label></td>
+                <td>
+                    <input type="text" th:field="*{lastName}">
+                    <div class="field-validation-error" th:errors="*{lastName}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Birth Date (date/month/year)*</label></td>
+                <td>
+                    <input type="date" th:field="*{birthDate}">
+                    <div class="field-validation-error" th:errors="*{birthDate}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Deceased Date (date/month/year)</label></td>
+                <td>
+                    <input type="date" th:field="*{deceasedDate}">
+                    <div class="field-validation-error" th:errors="*{deceasedDate}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Education</label></td>
+                <td>
+                    <input type="text" th:field="*{education}">
+                    <div class="field-validation-error" th:errors="*{education}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="textarea-label"><label>Summary</label></td>
+                <td>
+                    <textarea th:field="*{summary}"></textarea>
+                    <div class="field-validation-error" th:errors="*{summary}"></div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <button class="blue-button" type="submit" th:text="${type} + ' Author'"></button>
+        <button class="blue-button" th:href="@{/author/index}">Back to Index</button>
+    </form>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>

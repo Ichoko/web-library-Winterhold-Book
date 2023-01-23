@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body  class="main-body">
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header ('ERROR 404!')}"></header>
+<main>
+    <div class="fail-container">
+        <h1>CANNOT RECOGNIZE REQUEST</h1>
+        <p>
+            Halaman Yang Anda minta tidak Tersedia
+        </p>
+    </div>
+    <a class="blue-button" th:href="@{/}">back to Landing Page</a>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

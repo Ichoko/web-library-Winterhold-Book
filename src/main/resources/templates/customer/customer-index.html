@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+<main>
+    <div class="grid-container customer-index">
+        <form method="get" class="filter" th:attr="action=@{/customer/index}">
+            <input type="text" name="membershipNumber" placeholder="Number..." th:attr="value=${membershipNumber}">
+            <input type="text" name="name" placeholder="Name..." th:attr="value=${name}">
+            <button class="blue-button" type="submit">Search</button>
+        </form>
+        <a class="blue-button create-button" th:href="@{/customer/insertForm}">Add New Customer</a>
+        <table>
+            <thead>
+            <tr>
+                <th>Action</th>
+                <th>Membership Number</th>
+                <th>Full Name</th>
+                <th>Expire Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="customer: ${grid}">
+                <td>
+                    <a th:href="@{/customer/updateForm(membershipNumber=${customer.membershipNumber})}" class="blue-button update-button">Edit</a>
+                    <a th:href="@{/customer/delete(membershipNumber=${customer.membershipNumber})}" class="blue-button delete-button">Delete</a>
+                </td>
+                <td th:text="${customer.membershipNumber}"></td>
+                <td th:text="${customer.fullName}"></td>
+                <td th:text="${customer.membershipExpireDate}"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <div class="pagination">
+                        <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                        <div>
+                            <a th:each="loop:${#numbers.sequence(1,totalPages)}"
+                               th:href="@{/customer/index(page=${loop},memberNumber=${memberNumber},name=${fullName})}"
+                               th:text="${loop}"></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>

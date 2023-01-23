@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+<main>
+    <div class="grid-container customer-index">
+        <form method="get" class="filter" th:attr="action=@{/author/index}">
+            <input type="text" name="fullName" placeholder="Full Name..." th:attr="value=${fullName}">
+            <button class="blue-button" type="submit">Search</button>
+        </form>
+        <a class="blue-button create-button" th:href="@{/author/upsertForm}">Add New Author</a>
+        <table>
+            <thead>
+            <tr>
+                <th>Action</th>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>Status</th>
+                <th>Education</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="author: ${grid}">
+                <td>
+                    <a th:href="@{/author/books(id=${author.id})}" class="blue-button update-button">Book</a>
+                    <a th:href="@{/author/upsertForm(id=${author.id})}" class="blue-button update-button">Edit</a>
+                    <a th:href="@{/author/delete(id=${author.id})}" class="blue-button delete-button">Delete</a>
+                </td>
+                <td th:text="${author.fullName}"></td>
+                <td th:text="${author.age}"></td>
+                <td th:text="${author.status}"></td>
+                <td th:text="${author.education}"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <div class="pagination">
+                        <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                        <div>
+                            <a th:each="loop:${#numbers.sequence(1,totalPages)}"
+                               th:href="@{/author/index(page=${loop},fullName=${fullName})}"
+                               th:text="${loop}"></a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>

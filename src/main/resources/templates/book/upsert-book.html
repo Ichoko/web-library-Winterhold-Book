@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+<main>
+    <form method="post" class="upsert-form alternate-action" th:object="${book}">
+        <table th:attr="data-action=${type}">
+            <input type="hidden" th:field="*{isBorrowed}">
+            <tbody>
+            <tr>
+                <td><label>Code*</label></td>
+                <td>
+                    <input type="text" th:field="*{code}" class="readonly-id">
+                    <div class="field-validation-error" th:errors="*{code}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Title*</label></td>
+                <td>
+                    <input type="text" th:field="*{title}">
+                    <div class="field-validation-error" th:errors="*{title}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Category</label></td>
+                <td>
+                    <input type="text" th:field="*{categoryName}" readonly>
+                    <div class="field-validation-error" th:errors="*{categoryName}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Author*</label></td>
+                <td>
+                    <select th:field="*{authorId}">
+                        <option th:value=null>Select Author</option>
+                        <option th:each="option : ${authorDropdown}" th:value="${option.value}"
+                                th:text="${option.text}" th:selected="${option.value == author}"/>
+                    </select>
+                    <div class="field-validation-error" th:errors="*{authorId}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Release Date*</label></td>
+                <td>
+                    <input type="date" th:field="*{releaseDate}">
+                    <div class="field-validation-error" th:errors="*{releaseDate}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Total Page</label></td>
+                <td>
+                    <input type="text" th:field="*{totalPage}">
+                    <div class="field-validation-error" th:errors="*{totalPage}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="textarea-label"><label>Summary</label></td>
+                <td>
+                    <textarea th:field="*{summary}"></textarea>
+                    <div class="field-validation-error" th:errors="*{summary}"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="blue-button" type="submit" th:text="${type} + ' Book'"></button>
+    </form>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>
